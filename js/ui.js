@@ -56,16 +56,29 @@ function setPhase(phaseClass) {
     }
 }
 
-// ── MUTE BUTTON ─────────────────────────────────────────────
+// ── MUTE BUTTON + VOLUME SLIDER ─────────────────────────────
 function initMuteButton() {
     const btn = document.getElementById('btn-mute');
     const music = document.getElementById('bg-music');
+    const slider = document.getElementById('volume-slider');
     if (!btn || !music) return;
+
+    // Mute toggle
     btn.addEventListener('click', () => {
         music.muted = !music.muted;
         btn.textContent = music.muted ? '🔇' : '🔊';
         btn.classList.toggle('muted', music.muted);
     });
+
+    // Volume slider
+    if (slider) {
+        slider.addEventListener('input', () => {
+            music.volume = parseFloat(slider.value);
+            music.muted = (slider.value == 0);
+            btn.textContent = (slider.value == 0) ? '🔇' : '🔊';
+            btn.classList.toggle('muted', slider.value == 0);
+        });
+    }
 }
 
 // ── IMAGE MODAL ──────────────────────────────────────

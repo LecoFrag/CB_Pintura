@@ -26,8 +26,12 @@
     <!-- Música de Fundo -->
     <audio id="bg-music" src="inspiracao_quadros.mp3" loop preload="auto"></audio>
 
-    <!-- Botão Mute -->
-    <button id="btn-mute" class="mute-btn" title="Mutar / Desmutar música" aria-label="Mutar música">🔊</button>
+    <!-- Controles de Áudio -->
+    <div id="audio-controls" class="audio-controls">
+        <button id="btn-mute" class="mute-btn" title="Mutar / Desmutar música" aria-label="Mutar música">🔊</button>
+        <input id="volume-slider" class="volume-slider" type="range" min="0" max="1" step="0.05" value="0.5"
+            title="Volume">
+    </div>
 
     <!-- 4-Zone Layout -->
     <div id="game-layout">
