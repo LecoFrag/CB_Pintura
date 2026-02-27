@@ -112,8 +112,10 @@ body.phase-painting #painting-bg-video {
     opacity: 1;
 }
 
-/* ── Imagem de Fundo da Fase de Galeria ──────────────────── */
+/* ── Imagem de Fundo da Fase de Galeria ─────────────────── */
 #gallery-bg-image {
+    display: none;
+    /* controlado via JS em setPhase() */
     position: fixed;
     top: 0;
     left: 0;
@@ -121,13 +123,71 @@ body.phase-painting #painting-bg-video {
     height: 100vh;
     object-fit: cover;
     z-index: -1;
-    opacity: 0;
+    opacity: 0.15;
     pointer-events: none;
-    transition: opacity var(--transition-slow);
 }
 
-body.phase-gallery #gallery-bg-image {
-    opacity: 0.15;
+/* ── Modal Fullscreen de Quadro ──────────────────────── */
+.painting-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+}
+
+.painting-modal.active {
+    display: flex;
+}
+
+.painting-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.88);
+    backdrop-filter: blur(6px);
+    cursor: pointer;
+}
+
+.painting-modal-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    max-width: 90vw;
+    max-height: 90vh;
+    animation: fadeIn 0.2s ease;
+}
+
+.painting-modal-content img {
+    max-width: 80vw;
+    max-height: 70vh;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
+}
+
+.painting-modal-info {
+    text-align: center;
+}
+
+.painting-modal-info h2 {
+    font-family: var(--font-display);
+    color: var(--text-primary);
+    font-size: 1.2rem;
+    margin-bottom: 6px;
+}
+
+.painting-modal-info p {
+    color: var(--accent-gold);
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.zoomable-painting {
+    cursor: zoom-in;
 }
 
 /* ── 4-Zone Grid Layout ──────────────────────────────────── */

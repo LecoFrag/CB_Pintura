@@ -42,6 +42,54 @@ function setPhase(phaseClass) {
             bgVideo.pause();
         }
     }
+    const bgImg = document.getElementById('gallery-bg-image');
+    if (bgImg) {
+        bgImg.style.display = (phaseClass === 'phase-gallery') ? 'block' : 'none';
+    }
+}
+
+// ── IMAGE MODAL ──────────────────────────────────────
+function initImageModal() {
+    // Create modal element once
+    const modal = document.createElement('div');
+    modal.id = 'painting-modal';
+    modal.className = 'painting-modal';
+    modal.innerHTML = `
+        <div class="painting-modal-backdrop"></div>
+        <div class="painting-modal-content">
+            <img id="painting-modal-img" src="" alt="">
+            <div class="painting-modal-info">
+                <h2 id="painting-modal-title"></h2>
+                <p id="painting-modal-value"></p>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+
+    // Close on backdrop or Escape
+    modal.querySelector('.painting-modal-backdrop').addEventListener('click', () => closeModal());
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+    // Delegate click to all .zoomable-painting images in the whole document
+    document.addEventListener('click', e => {
+        const img = e.target.closest('.zoomable-painting');
+        if (!img) return;
+        openModal(img.src, img.dataset.name || '', img.dataset.value || '');
+    });
+}
+
+function openModal(src, name, value) {
+    const modal = document.getElementById('painting-modal');
+    if (!modal) return;
+    document.getElementById('painting-modal-img').src = src;
+    document.getElementById('painting-modal-title').textContent = name;
+    document.getElementById('painting-modal-value').textContent = value ? `Valor máximo: ${value}` : '';
+    modal.classList.add('active');
+}
+
+function closeModal() {
+    const modal = document.getElementById('painting-modal');
+    if (modal) modal.classList.remove('active');
 }
 
 // ── CONFIG SCREEN ──────────────────────────────────────────
@@ -360,13 +408,16 @@ function renderPaintingRightPanel() {
     clearZone($zone.right);
 
     $zone.right.innerHTML = `
-        <div class="collection-panel glass-card\">
+        <div class="collection-panel glass-card">
             <h3>🖼 Coleção</h3>
             <div class="collection-count">${gameState.paintings.length} obra${gameState.paintings.length !== 1 ? 's' : ''}</div>
             <div class="collection-grid">
                 ${gameState.paintings.map(p => `
                     <div class="collection-thumb">
-                        <img src="${p.image}" alt="${p.name}">
+                        <img src="${p.image}" alt="${p.name}"
+                             data-name="${p.name}"
+                             data-value="${formatCurrency(p.maxValue)}"
+                             class="zoomable-painting">
                         <div class="seal-mini ${p.sealClass}">${p.category}</div>
                     </div>
                 `).join('')}
@@ -387,7 +438,10 @@ function renderGalleryView(gameHour, gameMinute, progress, onStartRealTime) {
     for (const p of unsold) {
         wallHTML += `
         <div class="gallery-frame" data-pid="${p.id}">
-            <img src="${p.image}" alt="${p.name}">
+            <img src="${p.image}" alt="${p.name}"
+                 data-name="${p.name}"
+                 data-value="${formatCurrency(p.maxValue)}"
+                 class="zoomable-painting">
             <div class="frame-label">${p.name}</div>
             <div class="seal-mini ${p.sealClass}">${p.category}</div>
         </div>
