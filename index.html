@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Jogo de Simulação de Artista Plástico — Pinte obras, exponha na galeria e negocie com visitantes.">
+    <title>🎨 Galeria de Arte — Simulador de Artista Plástico</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body class="phase-setup">
+
+    <!-- Video de Fundo para Fase de Pintura -->
+    <video id="painting-bg-video" src="Images/Zeus_Pintando_Loop.mp4" loop muted playsinline></video>
+
+    <!-- 4-Zone Layout -->
+    <div id="game-layout">
+        <!-- TOP — Timeline / Progress -->
+        <header id="zone-top" class="zone zone-top"></header>
+
+        <!-- CENTER — Main Scene (Atelier / Gallery) -->
+        <main id="zone-center" class="zone zone-center"></main>
+
+        <!-- RIGHT — Visitors / Collection -->
+        <aside id="zone-right" class="zone zone-right"></aside>
+
+        <!-- BOTTOM — Artist Status / Finances -->
+        <footer id="zone-bottom" class="zone zone-bottom"></footer>
+    </div>
+
+    <!-- Overlay for Bid Popups -->
+    <div id="overlay" class="overlay"></div>
+
+    <script src="js/data.js"></script>
+    <script src="js/gameState.js"></script>
+    <script src="js/dice.js"></script>
+    <script src="js/painting.js"></script>
+    <script src="js/gallery.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
