@@ -112,6 +112,24 @@ body.phase-painting #painting-bg-video {
     opacity: 1;
 }
 
+/* ── Imagem de Fundo da Fase de Galeria ──────────────────── */
+#gallery-bg-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-slow);
+}
+
+body.phase-gallery #gallery-bg-image {
+    opacity: 0.15;
+}
+
 /* ── 4-Zone Grid Layout ──────────────────────────────────── */
 #game-layout {
     display: grid;
