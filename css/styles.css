@@ -207,6 +207,38 @@ body.phase-painting #painting-bg-video {
     cursor: zoom-in;
 }
 
+/* ── BOTÃO MUTE ──────────────────────────────────────────── */
+.mute-btn {
+    position: fixed;
+    top: 12px;
+    right: 16px;
+    z-index: 8000;
+    background: rgba(22, 22, 35, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: var(--text-primary);
+    font-size: 18px;
+    line-height: 1;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(6px);
+    transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+.mute-btn:hover {
+    background: rgba(212, 168, 83, 0.2);
+    border-color: var(--accent-gold);
+    transform: scale(1.1);
+}
+
+.mute-btn.muted {
+    opacity: 0.5;
+}
+
 /* ── 4-Zone Grid Layout ──────────────────────────────────── */
 #game-layout {
     display: grid;

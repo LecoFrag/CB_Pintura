@@ -46,6 +46,26 @@ function setPhase(phaseClass) {
     if (bgImg) {
         bgImg.style.display = (phaseClass === 'phase-gallery') ? 'block' : 'none';
     }
+    // Start music on first non-setup phase (plays for the rest of the game)
+    if (phaseClass !== 'phase-setup') {
+        const music = document.getElementById('bg-music');
+        if (music && music.paused) {
+            music.volume = 0.5;
+            music.play().catch(e => console.log('Music autoplay:', e));
+        }
+    }
+}
+
+// ── MUTE BUTTON ─────────────────────────────────────────────
+function initMuteButton() {
+    const btn = document.getElementById('btn-mute');
+    const music = document.getElementById('bg-music');
+    if (!btn || !music) return;
+    btn.addEventListener('click', () => {
+        music.muted = !music.muted;
+        btn.textContent = music.muted ? '🔇' : '🔊';
+        btn.classList.toggle('muted', music.muted);
+    });
 }
 
 // ── IMAGE MODAL ──────────────────────────────────────

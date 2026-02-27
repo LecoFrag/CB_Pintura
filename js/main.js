@@ -5,6 +5,7 @@
 function init() {
     cacheDom();
     initImageModal();
+    initMuteButton();
     renderConfigScreen(handleStartGame);
 }
 
