@@ -217,3 +217,17 @@ function getTierDistribution() {
 function getArrivedVisitorCount(gameMinute) {
     return gameState.dailyVisitors.filter(v => v.arrivalMinute <= gameMinute).length;
 }
+
+/**
+ * Get tier distribution only for visitors who have arrived up to a given game minute.
+ * @param {number} gameMinute — 0–479
+ */
+function getArrivedTierDistribution(gameMinute) {
+    const dist = { A: 0, B: 0, C: 0, D: 0, E: 0 };
+    for (const v of gameState.dailyVisitors) {
+        if (v.arrivalMinute <= gameMinute) {
+            dist[v.tier]++;
+        }
+    }
+    return dist;
+}

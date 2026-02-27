@@ -1201,9 +1201,11 @@ body.phase-painting #painting-bg-video {
 }
 
 .tier-label {
-    width: 50px;
+    width: 68px;
+    flex-shrink: 0;
     font-size: 0.8rem;
     font-weight: 700;
+    white-space: nowrap;
 }
 
 .tier-bar-bg {
@@ -1343,25 +1345,35 @@ body.phase-painting #painting-bg-video {
 .summary-stat {
     display: flex;
     align-items: center;
-    justify-content: center;
     gap: var(--gap-sm);
-    padding: 8px;
+    padding: 8px 12px;
     background: rgba(255, 255, 255, 0.03);
     border-radius: var(--radius-sm);
+    text-align: left;
+}
+
+.summary-stat-wide {
+    flex-wrap: wrap;
 }
 
 .summary-icon {
     font-size: 1.2rem;
+    flex-shrink: 0;
+    width: 28px;
+    text-align: center;
 }
 
 .summary-label {
     color: var(--text-secondary);
+    flex: 1;
+    text-align: left;
 }
 
 .summary-value {
     font-weight: 700;
     color: var(--text-primary);
-    margin-left: auto;
+    text-align: right;
+    flex-shrink: 0;
 }
 
 .sales-list {

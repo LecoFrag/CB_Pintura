@@ -140,10 +140,12 @@ function updateGalleryTick() {
 
     // Count arrived visitors
     const arrivedCount = getArrivedVisitorCount(gameMinute);
+    const arrivedTierDist = getArrivedTierDistribution(gameMinute);
 
     // Lightweight updates only — no DOM rebuild
     updateGalleryClock(displayHour, displayMin, progress);
     updateVisitorCount(arrivedCount);
+    updateTierBars(arrivedTierDist, gameState.config.maxCapacity);
 
     // Process visitors and check for bids
     const bids = processVisitorsUpTo(gameMinute);

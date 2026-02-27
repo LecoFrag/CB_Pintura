@@ -452,23 +452,22 @@ function markSoldPaintingOnWall(paintingId) {
 function renderVisitorPanel(tierDist, visitorsPresent, totalCapacity) {
     clearZone($zone.right);
 
+    // Inicializa todas as barras com zero
     let tierBarsHTML = '';
     for (const tc of TIER_CONFIG) {
-        const count = tierDist[tc.tier] || 0;
-        const maxBar = totalCapacity > 0 ? (count / totalCapacity) * 100 : 0;
         tierBarsHTML += `
-        <div class="tier-row\">
-                <span class="tier-label" style="color:${tc.color}">Tier ${tc.tier}</span>
-                <div class="tier-bar-bg">
-                    <div class="tier-bar" style="width:${maxBar}%;background:${tc.color}"></div>
-                </div>
-                <span class="tier-count">${count}</span>
+        <div class="tier-row">
+            <span class="tier-label" style="color:${tc.color}">Tier ${tc.tier}</span>
+            <div class="tier-bar-bg">
+                <div class="tier-bar" id="tier-bar-${tc.tier}" style="width:0%;background:${tc.color}"></div>
             </div>
+            <span class="tier-count" id="tier-count-${tc.tier}">0</span>
+        </div>
         `;
     }
 
     $zone.right.innerHTML = `
-        <div class="visitor-panel glass-card\">
+        <div class="visitor-panel glass-card">
             <h3>👥 Visitantes</h3>
             <div class="visitor-counter">
                 <span class="visitor-big" id="visitor-count-display">${visitorsPresent}</span>
@@ -486,6 +485,22 @@ function renderVisitorPanel(tierDist, visitorsPresent, totalCapacity) {
 function updateVisitorCount(count) {
     const el = document.getElementById('visitor-count-display');
     if (el) el.textContent = count;
+}
+
+/**
+ * Lightweight tick update — updates tier bars and counts based on arrived visitors.
+ * @param {object} arrivedTierDist — { A: n, B: n, ... } counts of arrived visitors per tier
+ * @param {number} totalCapacity — max capacity for bar scaling
+ */
+function updateTierBars(arrivedTierDist, totalCapacity) {
+    for (const tier in arrivedTierDist) {
+        const count = arrivedTierDist[tier] || 0;
+        const pct = totalCapacity > 0 ? (count / totalCapacity) * 100 : 0;
+        const bar = document.getElementById(`tier-bar-${tier}`);
+        const label = document.getElementById(`tier-count-${tier}`);
+        if (bar) bar.style.width = `${pct}%`;
+        if (label) label.textContent = count;
+    }
 }
 
 // ── ARTIST STATUS (BOTTOM ZONE) — GALLERY PHASE (render once) ──
@@ -587,12 +602,12 @@ function renderDaySummary(summary, onNext) {
             <div class="summary-stats">
                 <div class="summary-stat">
                     <span class="summary-icon">👥</span>
-                    <span class="summary-label">Visitante Ok:</span>
+                    <span class="summary-label">Visitantes:</span>
                     <span class="summary-value">${summary.totalVisitors}</span>
                 </div>
                 <div class="summary-stat">
                     <span class="summary-icon">🖼</span>
-                    <span class="summary-label">Quadro Vendido:</span>
+                    <span class="summary-label">Quadros Vendidos:</span>
                     <span class="summary-value">${summary.soldCount}</span>
                 </div>
                 <div class="summary-stat">
@@ -600,9 +615,9 @@ function renderDaySummary(summary, onNext) {
                     <span class="summary-label">Valor Arrecadado:</span>
                     <span class="summary-value">${formatCurrency(summary.revenue)}</span>
                 </div>
-                <div class="summary-stat">
+                <div class="summary-stat summary-stat-wide">
                     <span class="summary-icon">📈</span>
-                    <span class="summary-label">Valor Máx Possível (dessas vendas):</span>
+                    <span class="summary-label">Valor Máx. Possível (dessas vendas):</span>
                     <span class="summary-value">${formatCurrency(summary.maxPossibleValue)}</span>
                 </div>
             </div>
