@@ -186,6 +186,15 @@ body.phase-painting #painting-bg-video {
     font-size: 1rem;
 }
 
+.painting-modal-cat {
+    color: var(--text-secondary) !important;
+    font-weight: 400 !important;
+    font-size: 0.85rem !important;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+}
+
 .zoomable-painting {
     cursor: zoom-in;
 }

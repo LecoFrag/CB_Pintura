@@ -60,6 +60,7 @@ function initImageModal() {
             <img id="painting-modal-img" src="" alt="">
             <div class="painting-modal-info">
                 <h2 id="painting-modal-title"></h2>
+                <p id="painting-modal-category" class="painting-modal-cat"></p>
                 <p id="painting-modal-value"></p>
             </div>
         </div>
@@ -74,15 +75,17 @@ function initImageModal() {
     document.addEventListener('click', e => {
         const img = e.target.closest('.zoomable-painting');
         if (!img) return;
-        openModal(img.src, img.dataset.name || '', img.dataset.value || '');
+        openModal(img.src, img.dataset.name || '', img.dataset.value || '', img.dataset.category || '');
     });
 }
 
-function openModal(src, name, value) {
+function openModal(src, name, value, category) {
     const modal = document.getElementById('painting-modal');
     if (!modal) return;
     document.getElementById('painting-modal-img').src = src;
     document.getElementById('painting-modal-title').textContent = name;
+    const catEl = document.getElementById('painting-modal-category');
+    if (catEl) catEl.textContent = category || '';
     document.getElementById('painting-modal-value').textContent = value ? `Valor máximo: ${value}` : '';
     modal.classList.add('active');
 }
@@ -323,12 +326,16 @@ function renderDiceRoll(rollResult, painting, onContinue) {
             <div id="painting-reveal" style="opacity:0">
                 <div class="painting-result">
                     <div class="painting-image-frame">
-                        <img src="${painting.image}" alt="${painting.name}">
+                        <img src="${painting.image}" alt="${painting.name}"
+                             class="zoomable-painting"
+                             data-name="${painting.name}"
+                             data-value="${formatCurrency(painting.maxValue)}"
+                             data-category="${painting.category}">
                         <div class="seal-badge ${painting.sealClass}">${painting.category}</div>
                     </div>
                     <h3>${painting.name}</h3>
                 </div>
-                <button class="btn btn-primary" id="btn-continue-paint">Continuar ➜</button>
+                <button class="btn btn-primary" id="btn-continue-paint">Continuar ➤</button>
             </div>
         </div>
         `;
@@ -374,8 +381,11 @@ function renderArtistStatusPainting() {
     let historyHTML = '';
     for (const p of gameState.paintings) {
         historyHTML += `
-        <div class="history-item\">
-            <img src="${p.image}" alt="${p.name}" class="history-thumb">
+        <div class="history-item">
+            <img src="${p.image}" alt="${p.name}" class="history-thumb zoomable-painting"
+                 data-name="${p.name}"
+                 data-value="${formatCurrency(p.maxValue)}"
+                 data-category="${p.category}">
                 <span class="history-name">${p.name}</span>
                 <span class="seal-mini ${p.sealClass}">${p.category}</span>
             </div>
