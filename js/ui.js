@@ -42,6 +42,14 @@ function setPhase(phaseClass) {
             bgVideo.pause();
         }
     }
+    const resultsVideo = document.getElementById('results-bg-video');
+    if (resultsVideo) {
+        if (phaseClass === 'phase-results') {
+            resultsVideo.play().catch(e => console.log('Results video autoplay:', e));
+        } else {
+            resultsVideo.pause();
+        }
+    }
     const bgImg = document.getElementById('gallery-bg-image');
     if (bgImg) {
         bgImg.style.display = (phaseClass === 'phase-gallery') ? 'block' : 'none';
@@ -55,6 +63,7 @@ function setPhase(phaseClass) {
         }
     }
 }
+
 
 // ── MUTE BUTTON + VOLUME SLIDER ─────────────────────────────
 function initMuteButton() {

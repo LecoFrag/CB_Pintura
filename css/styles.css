@@ -127,6 +127,24 @@ body.phase-painting #painting-bg-video {
     pointer-events: none;
 }
 
+/* ── Vídeo de Fundo da Fase de Resultados ────────────────── */
+#results-bg-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-slow);
+}
+
+body.phase-results #results-bg-video {
+    opacity: 1;
+}
+
 /* ── Modal Fullscreen de Quadro ──────────────────────── */
 .painting-modal {
     display: none;
